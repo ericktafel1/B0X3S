@@ -1,1 +1,0 @@
-![[Target Machine - Mindmap 1.url]]
