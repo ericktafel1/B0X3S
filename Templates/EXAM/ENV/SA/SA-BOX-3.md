@@ -1,0 +1,85 @@
+  
+| IP address      | Name     | OS            | Access    | Password / Hash | FLAGS            | Status        |
+| --------------- | -------- | ------------- | --------- | --------------- | ---------------- | ------------- |
+| XXX.XXX.XXX.XXX | SA-BOX-3 | WINDOWS/LINUX | `COMMAND` | `PASSWORD/HASH` | NONE/LOCAL/PROOF | NOT-PWND/PWND |
+
+## Table of Contents
+
+```table-of-contents
+```
+
+## Reconnaissance
+
+### Port Scanning
+
+```c
+
+```
+
+```c
+
+```
+
+```c
+
+```
+
+### Enumeration of Port XXX/TCP/UDP
+
+```c
+
+```
+
+### Enumeration of Port XXX/TCP/UDP
+
+```c
+
+```
+
+### Enumeration of Port XXX/TCP/UDP
+
+```c
+
+```
+
+## Foothold
+
+```c
+
+```
+
+## local.txt
+
+```c
+
+```
+
+## Enumeration
+
+```c
+
+```
+
+## Privilege Escalation
+
+```c
+
+```
+
+## Pivoting
+
+```c
+
+```
+
+## Privilege Escalation to root/SYSTEM
+
+```c
+
+```
+
+## proof.txt
+
+```c
+
+```
