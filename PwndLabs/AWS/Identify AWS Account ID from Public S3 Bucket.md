@@ -9,11 +9,6 @@
 ```bash
 aws configure
 aws sts get-caller-identity
-	{
-    "UserId": "AIDAWHEOTHRF62U7I6AWZ",
-    "Account": "427648302155",
-    "Arn": "arn:aws:iam::427648302155:user/s3user"
-	}
 echo 'export PATH=$PATH:~/.local/bin' >> ~/.bashrc
 source ~/.bashrc
 ```

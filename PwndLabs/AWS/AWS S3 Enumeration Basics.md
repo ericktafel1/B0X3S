@@ -21,11 +21,7 @@ unzip hl_migration_project.zip
 
 This zip has `migrate_secrets.ps1` which contains AWS access key, secret key, and region. We use those to configure our `aws` cli and then `get-caller-identity`
 ```bash
-head migrate_secrets.ps1          
-	# AWS Configuration
-	$accessKey = "XXXXXXXXXXXXXXXXXXXXXXXX"
-	$secretKey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-	$region = "us-east-1"
+head migrate_secrets.ps1
 aws configure --profile pam
 aws sts get-caller-identity --profile pam
 ```
@@ -43,6 +39,7 @@ aws s3 cp s3://dev.huge-logistics.com/migration-files/ . --recursive --profile p
 
 The `test-export.xml` has `AWS IT Admin` AWS keys. Configure them to a new profile and authenticate to that `/admin` folder:
 ```bash
+strings test-export.xml
 aws configure --profile admin
 aws sts get-caller-identity --profile admin
 aws s3 ls s3://dev.huge-logistics.com/ --profile admin
