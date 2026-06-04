@@ -1,3 +1,5 @@
+https://pwnedlabs.io/labs/identify-the-aws-account-id-from-a-public-s3-bucket
+
 1. Run an `nmap` scan
 2. Inspect the webpage to find the bucket:
 	1. `https://mega-big-tech.s3.amazonaws.com/images/...`

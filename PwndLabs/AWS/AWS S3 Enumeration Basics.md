@@ -1,4 +1,4 @@
-`dev.huge-logistics.com`
+https://pwnedlabs.io/labs/aws-s3-enumeration-basics
 
 Inspect webpage to find the s3 bucket:
 	`http://s3.amazonaws.com/dev.huge-logistics.com`
