@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PwndLabs/AWS/Path Traversal to AWS credentials to S3.md",
+                "file": "PwndLabs/AWS/_Lab-Note.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Path Traversal to AWS credentials to S3"
+              "title": "_Lab-Note"
             }
           }
         ],
@@ -214,11 +214,11 @@
   },
   "active": "9ca96b07ac2211ca",
   "lastOpenFiles": [
+    "PwndLabs/AWS/Path Traversal to AWS credentials to S3.md",
     "PwndLabs/AWS/Identify AWS Account ID from Public S3 Bucket.md",
     "PwndLabs/AWS/Execute and Identify Credential Abuse in AWS.md",
     "PwndLabs/AWS/Assume Privileged Role with External ID.md",
     "PwndLabs/AWS/AWS S3 Enumeration Basics.md",
-    "PwndLabs/AWS/Path Traversal to AWS credentials to S3.md",
     "PwndLabs/AWS/_Lab-Note.md",
     "PwndLabs/Azure",
     "PwndLabs/AWS/Plunder Public RDS Snapshots.md",
