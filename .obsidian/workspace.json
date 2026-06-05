@@ -27,20 +27,6 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PwndLabs/AWS/Assume Privileged Role with External ID.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Assume Privileged Role with External ID"
-            }
-          },
-          {
-            "id": "9ca96b07ac2211ca",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
                 "file": "PwndLabs/AWS/_Lab-Note.md",
                 "mode": "source",
                 "source": false
@@ -48,23 +34,9 @@
               "icon": "lucide-file",
               "title": "_Lab-Note"
             }
-          },
-          {
-            "id": "910a4d5d6c89570b",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "XXXXXXXXXXXXXXXXXXXXXXXXXXXx.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "XXXXXXXXXXXXXXXXXXXXXXXXXXXx"
-            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -226,43 +198,51 @@
       "bases:Create new base": false
     }
   },
-  "active": "910a4d5d6c89570b",
+  "active": "d8d69b5c8d95eae1",
   "lastOpenFiles": [
-    "PwndLabs/AWS/_Lab-Note.md",
+    "ZZZZZZZZZZZZZZZZZZZZZ.md",
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXx.md",
-    "PwndLabs/AWS/Path Traversal to AWS credentials to S3.md",
-    "PwndLabs/AWS/Identify AWS Account ID from Public S3 Bucket.md",
-    "PwndLabs/AWS/Execute and Identify Credential Abuse in AWS.md",
-    "PwndLabs/AWS/Assume Privileged Role with External ID.md",
-    "PwndLabs/AWS/AWS S3 Enumeration Basics.md",
-    "PwndLabs/Azure",
-    "PwndLabs/AWS/Plunder Public RDS Snapshots.md",
+    "Templates/EXAM/ENV/AD/MS02.md",
+    "Templates/EXAM/ENV/AD/MS01.md",
+    "Templates/EXAM/ENV/AD/DC01.md",
+    "Templates/EXAM/ENV/SA/SA-BOX-3.md",
+    "Templates/EXAM/ENV/SA/SA-BOX-2.md",
+    "Templates/EXAM/ENV/SA/SA-BOX-1.md",
+    "Templates/EXAM/WORDLISTS/GATHERED_USERNAMES.md",
+    "Templates/EXAM/WORDLISTS/GATHERED_PASSWORDS.md",
+    "Templates/EXAM/ENV/AD",
+    "Templates/EXAM/ENV/SA",
+    "Templates/EXAM/ACCESS/PORT FORWARDING.md",
+    "Templates/EXAM/ACCESS/CREDENTIALS.md",
+    "Templates/EXAM/ACCESS/ACCESS.md",
+    "Templates/EXAM/WORDLISTS",
+    "Templates/EXAM/ENV",
+    "Templates/EXAM/ACCESS",
+    "Templates/10.10.x.10/X - Service.md",
+    "Templates/10.10.x.10/Port X - Service.md",
+    "Templates/10.10.x.10/Port 80 - HTTP.md",
+    "Templates/10.10.x.10/80 - HTTP.md",
+    "Templates/10.10.x.10/7-Hmmm.md",
+    "Templates/10.10.x.10/6-Loot.md",
+    "Templates/10.10.x.10/5-Notes.md",
+    "Templates/10.10.x.10/4-PostExploit.md",
+    "Templates/10.10.x.10/3-PrivEsc.md",
+    "Templates/10.10.x.10/2-Foothold.md",
+    "Templates/10.10.x.10/1-Enumeration Scans.md",
+    "Templates/10.10.x.10/000 - CHECKLIST.md",
+    "Templates/10.10.x.10/0-Notes.md",
+    "Templates/EXAM",
+    "Templates/10.10.x.10",
+    "Templates",
+    "output.py",
+    "Target Machine - Mindmap.url",
+    "Mindmaps/pentest_ad_dark_2023_02 1.svg",
+    "Mindmaps/AD Mindmap.canvas",
     "PwndLabs/AWS/images/Pasted image 20260604143857.png",
     "PwndLabs/AWS/images/Pasted image 20260604143901.png",
     "PwndLabs/AWS/images/Pasted image 20260604133322.png",
     "PwndLabs/AWS/images/Pasted image 20260604105411.png",
-    "test.md",
-    "test.md",
     "PwndLabs/AWS/images/Pasted image 20260603145519.png",
-    "PwndLabs/AWS/images/Pasted image 20260603114432.png",
-    "PwndLabs/AWS/images",
-    "PwndLabs/AWS",
-    "PwndLabs",
-    "HackSmarter/Samurai/Enumeration.md",
-    "HackSmarter/Untitled",
-    "HTB/Blue - HTB.md",
-    "HackSmarter/Samurai",
-    "HackSmarter",
-    "XXXXXXXXXXXXXXXXXXXXXXXXXx.md",
-    "TEST",
-    "HTB/Jerry - HTB.md",
-    "BugBounty/NOT A FINDING - page-list v5.7 - XSS.md",
-    "BugBounty/NOT A FINDING - WP-Crontrol Plugin 1.19.2 - RCE submitted.md",
-    "BugBounty/NOT A FINDING - Metronet Profile Picture 2.6.3 - XSS search.md",
-    "BugBounty",
-    "----------32145235325---------------------------.md",
-    "README.md",
-    "TREST.md",
-    "Welcome.md"
+    "PwndLabs/AWS/images/Pasted image 20260603114432.png"
   ]
 }
