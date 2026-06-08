@@ -43,5 +43,3 @@ aws ec2 describe-snapshots --owner-id self --restorable-by-user-ids all --no-pag
 EXFILTRATE: create a volume of EBS public snapshot: `AWS Console > select region us-east-1 > EC2 Service > Snapshots > Public snapshots > Snapshot ID = snap-0123456789 > Actions > Create volume from snapshot`
 
 Then, SSH into the EC2 instance and mount the volume. Enumerate for more AWS creds and the flag.
-
-![[Pasted image 20260605092351.png]]

@@ -127,4 +127,3 @@ Now, let's get that CC info:
 ```bash
 aws secretsmanager get-secret-value --secret-id billing/hl-default-payment --profile ECOA       
 ```
-![[Pasted image 20260604105411.png]]

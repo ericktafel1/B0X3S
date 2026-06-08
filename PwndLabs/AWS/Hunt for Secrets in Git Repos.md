@@ -56,4 +56,3 @@ go install
 trufflehog git file://cargo-logistics-dev/ --regex --no-entropy
 trufflehog git https://github.com/huge-logistics/cargo-logistics-dev --max-depth 2
 ```
-![[Pasted image 20260605095423.png]]

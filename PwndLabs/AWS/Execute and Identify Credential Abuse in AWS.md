@@ -115,5 +115,3 @@ go install github.com/WhiteOakSecurity/GoAWSConsoleSpray@latest
 Now, we know we can log into the AWS Dashboard with these creds.
 
 Try to view `user_order_logs` other DynamoDB table that we could not view earlier. `DynamoDB > Tables > Explore items`. This reveals PII of users and our flag
-
-![[Pasted image 20260604133322.png]]

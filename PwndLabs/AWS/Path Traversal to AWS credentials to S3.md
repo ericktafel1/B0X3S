@@ -47,5 +47,3 @@ Enuermated the flag. Now download it:
 ```bash
 aws s3 cp s3://huge-logistics-bucket/flag.txt . --profile nedf
 ```
-
-![[Pasted image 20260604143901.png]]

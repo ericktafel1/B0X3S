@@ -25,5 +25,3 @@ show tables;
 select * from employees;
 select * from flag;
 ```
-
-![[Pasted image 20260605151620.png]]

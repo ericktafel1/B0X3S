@@ -46,5 +46,3 @@ aws s3api get-object --bucket huge-logistics-dashboard --key "private/Business H
 ```
 
 We find the flag in this `.xlsx`
-
-![[Pasted image 20260605144824.png]]

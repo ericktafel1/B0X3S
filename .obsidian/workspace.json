@@ -104,9 +104,79 @@
               "icon": "lucide-file",
               "title": "Abuse Cognito User and Identity Pools"
             }
+          },
+          {
+            "id": "c8b9b591f9fe8b37",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/AWS/Uncover Secrets in CodeCommit and Docker.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Uncover Secrets in CodeCommit and Docker"
+            }
+          },
+          {
+            "id": "bbd53e4af6fcfbae",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/AWS/Leverage Insecure Storage and Backups for Profit.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Leverage Insecure Storage and Backups for Profit"
+            }
+          },
+          {
+            "id": "b126e7116288f2e6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/AWS/SSRF to Pwned.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "SSRF to Pwned"
+            }
+          },
+          {
+            "id": "6fd410e567560213",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/AWS/Exploit Weak Bucket Policies for Privileged Access.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Exploit Weak Bucket Policies for Privileged Access"
+            }
+          },
+          {
+            "id": "6d6c4cba46ac3c82",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/AWS/SQS and Lambda SQL Injection.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "SQS and Lambda SQL Injection"
+            }
           }
         ],
-        "currentTab": 6
+        "currentTab": 11
       }
     ],
     "direction": "vertical"
@@ -268,20 +338,35 @@
       "bases:Create new base": false
     }
   },
-  "active": "5d5b8bc2b2cf3b6c",
+  "active": "6d6c4cba46ac3c82",
   "lastOpenFiles": [
-    "PwndLabs/AWS/Leverage Leaked Credentials for Pwnage.md",
-    "PwndLabs/AWS/Identify AWS Account ID from Public S3 Bucket.md",
-    "PwndLabs/AWS/Execute and Identify Credential Abuse in AWS.md",
+    "PwndLabs/AWS/Exploit Weak Bucket Policies for Privileged Access.md",
     "PwndLabs/AWS/Hunt for Secrets in Git Repos.md",
-    "PwndLabs/AWS/Abuse Cognito User and Identity Pools.md",
+    "PwndLabs/AWS/Identify AWS Account ID from Public S3 Bucket.md",
+    "PwndLabs/AWS/Leverage Insecure Storage and Backups for Profit.md",
+    "PwndLabs/AWS/Leverage Leaked Credentials for Pwnage.md",
+    "PwndLabs/AWS/Loot Public EBS Snapshots.md",
+    "PwndLabs/AWS/Path Traversal to AWS credentials to S3.md",
+    "PwndLabs/AWS/S3 Bucket Brute Force to Breach.md",
+    "PwndLabs/AWS/SQS and Lambda SQL Injection.md",
+    "PwndLabs/AWS/Assume Privileged Role with External ID.md",
+    "PwndLabs/AWS/Execute and Identify Credential Abuse in AWS.md",
+    "PwndLabs/AWS/SSRF to Pwned.md",
     "PwndLabs/AWS/Access Secrets with S3 Bucket Versioning.md",
     "PwndLabs/AWS/_Lab-Note.md",
+    "PwndLabs/AWS/Uncover Secrets in CodeCommit and Docker.md",
+    "PwndLabs/AWS/AWS S3 Enumeration Basics.md",
+    "PwndLabs/AWS/Abuse Cognito User and Identity Pools.md",
+    "PwndLabs/AWS/images/Pasted image 20260604133322.png",
+    "PwndLabs/AWS/images/Pasted image 20260604105411.png",
+    "PwndLabs/AWS/images/Pasted image 20260603145519.png",
+    "PwndLabs/AWS/images/Pasted image 20260603114432.png",
+    "PwndLabs/AWS/images/Pasted image 20260604143901.png",
+    "PwndLabs/AWS/images/Pasted image 20260608112729.png",
+    "PwndLabs/AWS/images/Pasted image 20260608102502.png",
+    "PwndLabs/AWS/images/Pasted image 20260608092426.png",
     "PwndLabs/AWS/images/Pasted image 20260605151620.png",
     "PwndLabs/AWS/images/Pasted image 20260605144824.png",
-    "PwndLabs/AWS/images/Pasted image 20260605095423.png",
-    "PwndLabs/AWS/Loot Public EBS Snapshots.md",
-    "PwndLabs/AWS/images/Pasted image 20260605092351.png",
     "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZzz.md",
     "Untitled",
     "ZZZZZZZZZZZZZZZZZZZZZ.md",
@@ -292,30 +377,15 @@
     "Templates/EXAM/ENV/SA/SA-BOX-3.md",
     "Templates/EXAM/ENV/SA/SA-BOX-2.md",
     "Templates/EXAM/ENV/SA/SA-BOX-1.md",
-    "Templates/EXAM/WORDLISTS/GATHERED_USERNAMES.md",
-    "Templates/EXAM/WORDLISTS/GATHERED_PASSWORDS.md",
     "Templates/EXAM/ENV/AD",
     "Templates/EXAM/ENV/SA",
-    "Templates/EXAM/ACCESS/PORT FORWARDING.md",
-    "Templates/EXAM/ACCESS/CREDENTIALS.md",
-    "Templates/EXAM/ACCESS/ACCESS.md",
     "Templates/EXAM/WORDLISTS",
     "Templates/EXAM/ENV",
     "Templates/EXAM/ACCESS",
-    "Templates/10.10.x.10/X - Service.md",
-    "Templates/10.10.x.10/Port X - Service.md",
-    "Templates/10.10.x.10/Port 80 - HTTP.md",
-    "Templates/10.10.x.10/80 - HTTP.md",
     "Templates/EXAM",
     "Templates/10.10.x.10",
     "Templates",
     "output.py",
-    "Mindmaps/pentest_ad_dark_2023_02 1.svg",
-    "Mindmaps/AD Mindmap.canvas",
-    "PwndLabs/AWS/images/Pasted image 20260604143857.png",
-    "PwndLabs/AWS/images/Pasted image 20260604143901.png",
-    "PwndLabs/AWS/images/Pasted image 20260604133322.png",
-    "PwndLabs/AWS/images/Pasted image 20260604105411.png",
-    "PwndLabs/AWS/images/Pasted image 20260603145519.png"
+    "Mindmaps/AD Mindmap.canvas"
   ]
 }

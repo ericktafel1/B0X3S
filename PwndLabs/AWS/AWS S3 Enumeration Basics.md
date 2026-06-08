@@ -45,5 +45,3 @@ aws sts get-caller-identity --profile admin
 aws s3 ls s3://dev.huge-logistics.com/ --profile admin
 aws s3 cp s3://dev.huge-logistics.com/admin/flag.txt . --profile admin
 ```
-
-![[Pasted image 20260603145519.png]]

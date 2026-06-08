@@ -43,7 +43,6 @@ curl -I https://mega-big-tech.s3.amazonaws.com
 In the AWS Management Console search for the EC2 service
 	`Left hand menu: Elastic Block Store > Snapshots > Public snapshots > "107513503799" > Enter/Run `
 
-![[Pasted image 20260603114432.png]]
 Bonus:
 To list public snapshots, supply owner ID and region:
 ```bash
