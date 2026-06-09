@@ -48,9 +48,37 @@
               "icon": "lucide-file",
               "title": "Understand Authentication Mechanisms Using Boto3"
             }
+          },
+          {
+            "id": "203891f3ef16d1a3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/Azure/Unlock Access with Azure Key Vault.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Unlock Access with Azure Key Vault"
+            }
+          },
+          {
+            "id": "8ebc40769985486c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/Azure/Intro to Azure Recon with BloodHound.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Intro to Azure Recon with BloodHound"
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -212,11 +240,15 @@
       "bases:Create new base": false
     }
   },
-  "active": "00e0fbb45e144674",
+  "active": "8ebc40769985486c",
   "lastOpenFiles": [
+    "PwndLabs/Azure/Unlock Access with Azure Key Vault.md",
+    "PwndLabs/Azure/Azure Blob Container to Initial Access.md",
+    "PwndLabs/Azure/Intro to Azure Recon with BloodHound.md",
+    "PwndLabs/AWS/Understand Authentication Mechanisms Using Boto3.md",
+    "PwndLabs/AWS/Uncover Secrets in CodeCommit and Docker.md",
     "PwndLabs/AWS/wormius.py",
     "PwndLabs/AWS/Create Custom Tooling to Explore AWS.md",
-    "PwndLabs/AWS/Understand Authentication Mechanisms Using Boto3.md",
     "PwndLabs/AWS/profess3rwebb.py",
     "profess3rwebb.py",
     "PwndLabs/AWS/_Lab-Note.md",
@@ -224,7 +256,6 @@
     "PwndLabs/AWS/Exploit Weak Bucket Policies for Privileged Access.md",
     "PwndLabs/AWS/SSRF to Pwned.md",
     "PwndLabs/AWS/Leverage Insecure Storage and Backups for Profit.md",
-    "PwndLabs/AWS/Uncover Secrets in CodeCommit and Docker.md",
     "PwndLabs/AWS/Abuse Cognito User and Identity Pools.md",
     "PwndLabs/AWS/Access Secrets with S3 Bucket Versioning.md",
     "PwndLabs/AWS/Hunt for Secrets in Git Repos.md",
@@ -251,15 +282,12 @@
     "ZZZZZZZZZZZZZZZZZZZZZ.md",
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXx.md",
     "Templates/EXAM/ENV/AD/MS02.md",
-    "Templates/EXAM/ENV/AD/MS01.md",
-    "Templates/EXAM/ENV/AD/DC01.md",
     "Templates/EXAM/ENV/AD",
     "Templates/EXAM/ENV/SA",
     "Templates/EXAM/WORDLISTS",
     "Templates/EXAM/ENV",
     "Templates/EXAM/ACCESS",
     "Templates/EXAM",
-    "Templates/10.10.x.10",
     "Mindmaps/AD Mindmap.canvas"
   ]
 }

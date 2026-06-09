@@ -1,12 +1,5 @@
 https://pwnedlabs.io/labs/understand-authentication-mechanisms-using-boto3
 
-We start with AWS credentials, configure them and enumerate:
-
-```bash
-aws configure --profile boto
-aws sts get-caller-identity --profile boto
-```
-
 Followed the lab and built this custom script for authenticated S3 enumeration and exfiltration! :):
 
 ```python
