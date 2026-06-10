@@ -76,9 +76,23 @@
               "icon": "lucide-file",
               "title": "Intro to Azure Recon with BloodHound"
             }
+          },
+          {
+            "id": "9e2b5d11bbd75268",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "PwndLabs/Azure/Loot Exchange, Teams and Sharepoint with GraphRunner.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Loot Exchange, Teams and Sharepoint with GraphRunner"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -240,11 +254,12 @@
       "bases:Create new base": false
     }
   },
-  "active": "8ebc40769985486c",
+  "active": "9e2b5d11bbd75268",
   "lastOpenFiles": [
     "PwndLabs/Azure/Unlock Access with Azure Key Vault.md",
-    "PwndLabs/Azure/Azure Blob Container to Initial Access.md",
     "PwndLabs/Azure/Intro to Azure Recon with BloodHound.md",
+    "PwndLabs/Azure/Azure Blob Container to Initial Access.md",
+    "PwndLabs/Azure/Loot Exchange, Teams and Sharepoint with GraphRunner.md",
     "PwndLabs/AWS/Understand Authentication Mechanisms Using Boto3.md",
     "PwndLabs/AWS/Uncover Secrets in CodeCommit and Docker.md",
     "PwndLabs/AWS/wormius.py",
@@ -281,7 +296,6 @@
     "Untitled",
     "ZZZZZZZZZZZZZZZZZZZZZ.md",
     "XXXXXXXXXXXXXXXXXXXXXXXXXXXx.md",
-    "Templates/EXAM/ENV/AD/MS02.md",
     "Templates/EXAM/ENV/AD",
     "Templates/EXAM/ENV/SA",
     "Templates/EXAM/WORDLISTS",
