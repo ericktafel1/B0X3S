@@ -4,95 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "ccae5a3070312cd3",
+        "id": "93be93e6c6d7becc",
         "type": "tabs",
         "children": [
           {
-            "id": "6d6c4cba46ac3c82",
+            "id": "72eab4d912d60f80",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PwndLabs/AWS/SQS and Lambda SQL Injection.md",
+                "file": "PwndLabs/AWS/Execute and Identify Credential Abuse in AWS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SQS and Lambda SQL Injection"
-            }
-          },
-          {
-            "id": "3838a8d2163e37b0",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PwndLabs/AWS/Create Custom Tooling to Explore AWS.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Create Custom Tooling to Explore AWS"
-            }
-          },
-          {
-            "id": "00e0fbb45e144674",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PwndLabs/AWS/Understand Authentication Mechanisms Using Boto3.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Understand Authentication Mechanisms Using Boto3"
-            }
-          },
-          {
-            "id": "203891f3ef16d1a3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PwndLabs/Azure/Unlock Access with Azure Key Vault.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Unlock Access with Azure Key Vault"
-            }
-          },
-          {
-            "id": "8ebc40769985486c",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PwndLabs/Azure/Intro to Azure Recon with BloodHound.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Intro to Azure Recon with BloodHound"
-            }
-          },
-          {
-            "id": "9e2b5d11bbd75268",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "PwndLabs/Azure/Loot Exchange, Teams and Sharepoint with GraphRunner.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Loot Exchange, Teams and Sharepoint with GraphRunner"
+              "title": "Execute and Identify Credential Abuse in AWS"
             }
           }
-        ],
-        "currentTab": 5
+        ]
       }
     ],
     "direction": "vertical"
@@ -254,13 +183,14 @@
       "bases:Create new base": false
     }
   },
-  "active": "9e2b5d11bbd75268",
+  "active": "72eab4d912d60f80",
   "lastOpenFiles": [
-    "PwndLabs/Azure/Unlock Access with Azure Key Vault.md",
-    "PwndLabs/Azure/Intro to Azure Recon with BloodHound.md",
-    "PwndLabs/Azure/Azure Blob Container to Initial Access.md",
+    "PwndLabs/AWS/Abuse Cognito User and Identity Pools.md",
     "PwndLabs/Azure/Loot Exchange, Teams and Sharepoint with GraphRunner.md",
+    "PwndLabs/Azure/Intro to Azure Recon with BloodHound.md",
+    "PwndLabs/Azure/Unlock Access with Azure Key Vault.md",
     "PwndLabs/AWS/Understand Authentication Mechanisms Using Boto3.md",
+    "PwndLabs/Azure/Azure Blob Container to Initial Access.md",
     "PwndLabs/AWS/Uncover Secrets in CodeCommit and Docker.md",
     "PwndLabs/AWS/wormius.py",
     "PwndLabs/AWS/Create Custom Tooling to Explore AWS.md",
@@ -271,7 +201,6 @@
     "PwndLabs/AWS/Exploit Weak Bucket Policies for Privileged Access.md",
     "PwndLabs/AWS/SSRF to Pwned.md",
     "PwndLabs/AWS/Leverage Insecure Storage and Backups for Profit.md",
-    "PwndLabs/AWS/Abuse Cognito User and Identity Pools.md",
     "PwndLabs/AWS/Access Secrets with S3 Bucket Versioning.md",
     "PwndLabs/AWS/Hunt for Secrets in Git Repos.md",
     "PwndLabs/AWS/Loot Public EBS Snapshots.md",
