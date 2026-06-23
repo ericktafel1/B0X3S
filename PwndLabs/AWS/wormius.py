@@ -2,7 +2,7 @@
 """
 Tool Name: wormius.py (The Wormius Translator)
 Author: Erick Tafel (g1gs)
-Purpose: Authenticated AWS S3 and Secrets Manager harvester with a H.P. Lovecraft theme.
+Purpose: Authenticated AWS S3 and Secrets Manager harvester with a H.P. Lovecraft theme. Improved version of the script provided in PwnedLabs.
 """
 
 import boto3              # pip3 install boto3 in your VM/docker/host

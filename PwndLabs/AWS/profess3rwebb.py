@@ -2,7 +2,7 @@
 """
 Tool Name: profess3rwebb.py
 Author: Erick Tafel (g1gs)
-Purpose: Lightweight AWS S3 bucket directory mapper and file harvester with H.P. Lovecraft theme.
+Purpose: Lightweight AWS S3 bucket directory mapper and file harvester with H.P. Lovecraft theme. Improved version of the script provided by PwnedLabs.
 """
 
 import requests
