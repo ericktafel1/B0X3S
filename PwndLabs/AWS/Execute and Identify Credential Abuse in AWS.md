@@ -1,5 +1,26 @@
 https://pwnedlabs.io/labs/execute-and-identify-credential-abuse-in-aws
 
+---
+## Vulnerability Summary
+The environment is vulnerable to a multi-stage attack chain resulting from excessive 
+exposure of sensitive data in S3, poor credential management, and weak password 
+policies in the AWS Console.
+
+1. **Information Disclosure**: A public S3 bucket contained a `migration-backup.json` 
+   file with hardcoded AWS IAM credentials, allowing an attacker to assume the 
+   identity of a `migration-test` user.
+2. **Credential Exfiltration**: Once authenticated, the attacker used automated tools 
+   like `Pacu` and `aws-enumerator` to discover extensive permissions within the 
+   `DynamoDB` service.
+3. **Data Harvesting & Password Cracking**: The attacker scanned the `analytics_app_users` 
+   table to extract user password hashes. By performing offline cracking (e.g., `John the Ripper`), 
+   they successfully recovered plain-text credentials.
+4. **Credential Spraying & Impact**: Using `GoAWSConsoleSpray`, the attacker validated 
+   these credentials against the AWS Console. Successful login resulted in unauthorized 
+   access to additional `DynamoDB` tables containing PII and system flags.
+
+---
+## Walkthrough
 Start with just the xposed bucket `hl-storage-general` and list the contents without any creds:
 ```bash
 aws s3 ls hl-storage-general --no-sign-request
@@ -115,3 +136,29 @@ go install github.com/WhiteOakSecurity/GoAWSConsoleSpray@latest
 Now, we know we can log into the AWS Dashboard with these creds.
 
 Try to view `user_order_logs` other DynamoDB table that we could not view earlier. `DynamoDB > Tables > Explore items`. This reveals PII of users and our flag
+
+---
+## Remediations
+1. **Infrastructure Security**:
+   - Strictly implement **S3 Block Public Access** for all buckets to prevent the 
+     exposure of configuration files containing credentials.
+   - Use `AWS Secrets Manager` to store and rotate application credentials 
+     automatically, eliminating the need for hardcoded JSON files in S3.
+
+2. **IAM Policy Hardening**:
+   - Apply the **Principle of Least Privilege (PoLP)**; restrict `dynamodb:Scan` 
+     permissions to only the specific identities and service roles that require them.
+   - Enable `IAM Access Analyzer` to identify and remove unused permissions.
+
+3. **Authentication & Identity Controls**:
+   - Enforce **Multi-Factor Authentication (MFA)** for all AWS Console users, 
+     including those with limited access, to prevent successful credential 
+     spraying attacks.
+   - Implement strong **Password Policies** and monitor for anomalous login 
+     activity using `AWS CloudTrail` and `Amazon GuardDuty`.
+
+4. **Monitoring & Detection**:
+   - Monitor for bulk `dynamodb:Scan` operations, which are often indicative of 
+     malicious data exfiltration.
+   - Audit the `DynamoDB` environment for tables containing PII and ensure they 
+     are encrypted at rest using `AWS KMS`.

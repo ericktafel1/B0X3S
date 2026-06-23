@@ -1,5 +1,27 @@
 https://pwnedlabs.io/labs/assume-privileged-role-with-external-id
 
+---
+## Vulnerability Summary
+The environment is vulnerable to privilege escalation and unauthorized access to 
+sensitive cloud secrets due to insecure exposure of IAM credentials and 
+misconfigured cross-account IAM role trust relationships.
+
+1. **Credential Exposure**: Sensitive AWS credentials were inadvertently exposed 
+   via a publicly accessible `config.json` file, allowing an attacker to 
+   authenticate as a low-privilege IAM user.
+2. **Excessive Permissions**: The initial compromised user possessed 
+   `secretsmanager:ListSecrets` permissions, facilitating the discovery of high-value 
+   sensitive secrets.
+3. **Privilege Escalation via Trust Relationships**: By leveraging existing 
+   trust relationships, the attacker identified a role (`ExternalCostOptimizeAccess`) 
+   intended for third-party access.
+4. **Bypassing Security Controls**: While the role required an `ExternalId` 
+   for protection, this value was discovered through manual policy enumeration, 
+   enabling the attacker to successfully execute `sts:AssumeRole` and gain 
+   unauthorized access to critical financial data.
+
+---
+## Walkthrough
 `AssumeRole` is similar to `sudo`
 
 We find the email address `info@hugelogistics.com` and infer the domain name for the website is `hugelogistics.com`
@@ -127,3 +149,29 @@ Now, let's get that CC info:
 ```bash
 aws secretsmanager get-secret-value --secret-id billing/hl-default-payment --profile ECOA       
 ```
+
+---
+## Remediations
+1. **Secrets Governance**:
+   - Strictly prohibit the storage of AWS keys or configuration files in web-accessible 
+     directories.
+   - Utilize `AWS Secrets Manager` or `Systems Manager Parameter Store` to manage 
+     sensitive credentials rather than hardcoding them in files.
+
+2. **IAM Least Privilege**:
+   - Audit and restrict IAM policies to the minimum necessary permissions. Avoid 
+     blanket `secretsmanager:ListSecrets` permissions if the user does not require them.
+   - Regularly review and clean up IAM policies and attached roles to ensure 
+     that third-party access is scoped tightly to specific resources.
+
+3. **Secure Role Assumption**:
+   - When using `ExternalId` to prevent the "confused deputy" problem, ensure 
+     that the `ExternalId` is treated as a secret. It should not be discoverable 
+     through standard policy enumeration or public configuration files.
+   - Implement monitoring for `sts:AssumeRole` activity, specifically alerting on 
+     assumptions made by unexpected users or from unrecognized IP addresses.
+
+4. **Continuous Auditing**:
+   - Use tools like `CloudTrail` to monitor for unusual `sts:GetCallerIdentity` or 
+     `secretsmanager:GetSecretValue` calls to identify potentially compromised 
+     sessions early.

@@ -1,6 +1,17 @@
 https://pwnedlabs.io/labs/understand-authentication-mechanisms-using-boto3
 
-Followed the lab and built this custom script for authenticated S3 enumeration and exfiltration! :):
+---
+## Vulnerability Summary
+The environment is vulnerable to **over-privileged IAM identities** and the **improper exposure of sensitive configuration data** through `Secrets Manager`. This walkthrough demonstrates how automated tooling (`boto3`) can be used to pivot from identity verification to full resource exfiltration.
+
+1. **Identity Misconfiguration**: The provided IAM credentials possessed overly broad permissions, allowing the use of `sts:GetCallerIdentity` to confirm user privileges and target account details.
+2. **S3 Data Exfiltration**: Due to permissive bucket policies, the authenticated identity was able to perform `s3:ListObjectsV2` and `s3:GetObject`, facilitating the automated exfiltration of all objects within the target bucket.
+3. **Secrets Manager Compromise**: The identity also held `secretsmanager:ListSecrets` and `secretsmanager:GetSecretValue` permissions. By iterating through available secrets, the script decrypted and displayed sensitive application configuration data, including API keys and database credentials.
+4. **Impact**: The automation of these actions demonstrates how a single compromised credential set can be used to rapidly map and exploit an AWS environment's most sensitive assets.
+
+---
+## Walkthrough
+Followed the lab and modified the script to this custom script for authenticated S3 enumeration and exfiltration:
 
 ```python
 #!/usr/bin/env python3
@@ -127,3 +138,20 @@ try:
 except Exception as e:
     print(f"[-] Sanity Check: Secrets Manager queries completely blocked: {e}")
 ```
+
+---
+## Remediations
+1. **Apply Principle of Least Privilege (PoLP)**:
+   - Audit IAM policies assigned to human and machine identities. Ensure that users only possess the specific permissions needed for their tasks (e.g., limit S3 access to specific buckets or prefixes).
+   - Avoid using long-lived `Access Keys` and `Secret Access Keys`. Transition to temporary credentials using `IAM Roles` or `AWS STS` where possible.
+
+2. **Harden Secrets Management**:
+   - Apply restrictive resource-based policies to `Secrets Manager`. Use `kms:EncryptionContext` to ensure that only authorized entities can decrypt specific secrets.
+   - Regularly rotate secrets using `AWS Secrets Manager` to minimize the impact of a credential leak.
+
+3. **Monitor API Activity**:
+   - Enable `AWS CloudTrail` to log all API calls. Set up alerts for high-frequency `ListSecrets` or `GetSecretValue` calls, which are indicators of automated exfiltration scripts.
+   - Utilize `Amazon GuardDuty` to detect anomalous behavior, such as unauthorized API calls from unrecognized IP addresses or unusual user-agent strings.
+
+4. **Resource-Level Controls**:
+   - Use `IAM Policy` conditions to restrict access to specific resources (like S3 buckets or specific Secrets Manager ARNs) based on the `aws:PrincipalArn` or the requesting VPC.

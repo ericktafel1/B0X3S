@@ -1,5 +1,23 @@
 https://pwnedlabs.io/labs/hunt-for-secrets-in-git-repos
 
+---
+## Vulnerability Summary
+The environment is vulnerable to information disclosure through improper S3 bucket permissions 
+and the historical retention of sensitive data via S3 Object Versioning.
+
+1. **Information Disclosure**: Misconfigured S3 bucket policies allowed unauthenticated 
+   listing of bucket contents and object metadata, revealing private file paths.
+2. **Improper Versioning Security**: S3 Object Versioning was enabled without 
+   corresponding access controls, allowing attackers to retrieve previous versions of files 
+   that contained hardcoded credentials.
+3. **Credential Harvesting**: By inspecting older versions of `auth.js` obtained via 
+   `aws s3api get-object`, an attacker recovered plain-text credentials for the application.
+4. **Privilege Escalation & Impact**: Credential reuse on the web dashboard allowed 
+   access to an administrative profile containing static AWS IAM keys, leading to the 
+   exfiltration of sensitive corporate documents (`.xlsx`) protected by S3 versioning.
+
+---
+## Walkthrough
 Enumerate the s3 bucket with provided IP:
 
 ```bash
@@ -46,3 +64,24 @@ aws s3api get-object --bucket huge-logistics-dashboard --key "private/Business H
 ```
 
 We find the flag in this `.xlsx`
+
+---
+## Remediations
+1. **S3 Bucket Security**:
+   - Apply the **Principle of Least Privilege (PoLP)** to S3 bucket policies; disable 
+     public read access unless strictly required for public assets.
+   - Restrict `s3:ListBucket` and `s3:GetObject` permissions to specific IAM 
+     principals only.
+
+2. **Secrets Management**:
+   - **Never hardcode credentials** in source code or static files like `auth.js`.
+   - Use centralized services like **AWS Secrets Manager** or **Parameter Store** to 
+     manage sensitive configuration data.
+   - Implement automated secret scanning (e.g., TruffleHog or Gitleaks) to detect 
+     secrets committed to repositories before they are deployed to buckets.
+
+3. **Versioning & Lifecycle Policies**:
+   - Ensure that sensitive buckets have strictly defined IAM policies, as 
+     versioning provides a history that may contain "deleted" secrets.
+   - Utilize **S3 Lifecycle Policies** to permanently delete or transition old object 
+     versions to secure storage if they are no longer required.

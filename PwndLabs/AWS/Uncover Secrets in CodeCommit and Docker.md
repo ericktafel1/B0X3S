@@ -1,5 +1,16 @@
 https://pwnedlabs.io/labs/uncover-secrets-in-codecommit-and-docker
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **Supply Chain Compromise** and **Information Disclosure** due to the inclusion of sensitive credentials in container images and version control system (CodeCommit) history.
+
+1. **Insecure Container Distribution**: A Docker image (`huge-logistics-terraform-runner`) was published to a public registry containing hardcoded AWS IAM credentials within its environment variables.
+2. **Exposure via Image Inspection**: Because the secrets were bundled directly into the container's environment, they were trivially discoverable using `docker inspect` or by running the container and checking the `env` output.
+3. **Privilege Escalation via CodeCommit**: The leaked credentials granted access to `AWS CodeCommit`, where an attacker used Git history analysis (`get-differences`) to discover additional, more privileged credentials stored in older versions of `js/server.js`.
+4. **Impact**: The high-privilege `code-admin` credentials facilitated unauthorized access to sensitive S3 buckets containing corporate flags, demonstrating how credential leakage in the CI/CD pipeline propagates to production infrastructure.
+
+---
+## Walkthrough
 Searching on Docker Hub for images related to Huge Logistics, we find `huge-logistics-terraform-runner` Running version `0.12`. Can also enumerate with `docker`:
 
 ```bash
@@ -101,3 +112,20 @@ We can now use these creds as `code-admin`, enumerate the bucket `vessel-trackin
 aws s3 ls vessel-tracking --profile codecommit
 aws s3 cp s3://vessel-tracking/flag.txt . --profile codecommit
 ```
+
+---
+## Remediations
+1. **Secure Container Images**:
+   - **Never include secrets** (keys, passwords, tokens) in Docker images or environment variables. Use `AWS Secrets Manager` or `Parameter Store` to inject configuration at runtime.
+   - Use multi-stage builds to remove sensitive build-time artifacts and tools before creating the final production image.
+
+2. **Clean Code Histories**:
+   - Perform periodic scans of `CodeCommit` and other Git repositories for hardcoded credentials. 
+   - If secrets are accidentally pushed, consider the credentials compromised, rotate them immediately, and use tools like `git-filter-repo` to permanently remove the history.
+
+3. **CI/CD Security**:
+   - Use **IAM Roles** for tasks and runners rather than static access keys. 
+   - Implement automated vulnerability scanning for container images using `Docker Scout` or `Amazon ECR Image Scanning` to identify and patch vulnerable dependencies like `OpenSSL`.
+
+4. **Access Control**:
+   - Enforce the **Principle of Least Privilege (PoLP)** on CodeCommit repositories; ensure that only authorized service principals have `codecommit:GetFile` or `codecommit:GetCommit` permissions.

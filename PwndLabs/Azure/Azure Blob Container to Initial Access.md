@@ -1,5 +1,16 @@
 https://pwnedlabs.io/labs/azure-blob-container-to-initial-access
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **Information Disclosure** and **Account Compromise** due to the improper configuration of Azure Blob Storage and the exposure of sensitive scripts.
+
+1. **Public Blob Exposure**: The `$web` container in the Azure Storage Account was configured with public access, allowing unauthenticated listing of its contents via the Blob Service REST API.
+2. **Version History Leakage**: By leveraging the `x-ms-version` header and the `include=versions` parameter, the attacker successfully discovered historical versions of sensitive files (`scripts-transfer.zip`) that had been "deleted" or overwritten.
+3. **Credential Harvesting**: The unzipped scripts contained plaintext credentials and automated logic for authenticating into the organization's Azure environment.
+4. **Initial Access & Privilege Escalation**: Using the exfiltrated credentials, the attacker successfully performed an OAuth 2.0 device code flow (`az login --use-device-code`) to gain an authenticated session in the target's Entra ID (Azure AD) tenant, leading to the retrieval of account details and flags.
+
+---
+## Walkthrough
 The lab starts with a publicly exposed URL `https://dev.megabigtech.com/$web/index.html`. Navigate here and inspect the web page and we find a references to `https://mbtwebsite.blob.core.windows.net/$web/...`
 
 `mbtwebsite` = name of the Azure Storage Account associated with the website
@@ -77,3 +88,21 @@ az login --use-device-code
 	To sign in, use a web browser to open the page https://login.microsoft.com/device and enter the code ES6QHV5UX to authenticate.
 az ad signed-in-user show
 ```
+
+---
+## Remediations
+1. **Restrict Public Access**:
+   - Enable `Allow Blob public access: Disabled` at the storage account level. This effectively overrides any container-level public settings.
+   - Use **Shared Access Signatures (SAS)** with strictly limited scopes and expiry times if public access is required for specific assets.
+
+2. **Manage Versioning Securely**:
+   - Periodically audit storage account versioning. If versioning is enabled for compliance, ensure that access to older versions is restricted by strict RBAC policies.
+   - Do not use storage accounts as repositories for sensitive scripts or configuration files, even if you believe the files are "hidden" or "deleted."
+
+3. **Secure Secrets Lifecycle**:
+   - Never embed credentials in scripts. Use **Azure Key Vault** to store and retrieve secrets programmatically using Managed Identities.
+   - Implement **Microsoft Entra ID (Azure AD) Managed Identities** for automated scripts to eliminate the need for hardcoded service principal credentials.
+
+4. **Monitoring & Governance**:
+   - Enable **Azure Storage Logging** and monitor for anomalous API requests, such as listing operations with `include=versions` parameters.
+   - Use **Microsoft Defender for Storage** to automatically detect and alert on unauthorized access attempts or suspicious configuration changes.

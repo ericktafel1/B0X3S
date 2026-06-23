@@ -1,5 +1,16 @@
 https://pwnedlabs.io/labs/create-custom-tooling-to-explore-aws
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **Information Disclosure** and **Automated Data Exfiltration** due to unauthenticated S3 bucket listing capabilities and lack of effective network-level access controls.
+
+1. **Unauthenticated Enumeration**: The target S3 bucket allows unauthenticated `list-type=2` requests, enabling attackers to map the entire bucket structure, including directory paths and object keys.
+2. **Metadata Disclosure**: By manipulating standard AWS S3 API parameters (e.g., `prefix`, `delimiter`), an attacker can bypass manual navigation limitations to discover hidden or sensitive file locations.
+3. **Automated Exfiltration**: The vulnerability allows for the development of custom scripts to programmatically iterate through all bucket objects, identify files, and automatically download them locally.
+4. **Impact**: Automated scraping tools can quickly locate and exfiltrate sensitive documentation, configurations, or credentials, leading to large-scale data breaches.
+
+---
+## Walkthrough
 For this lab, we need:
 - Burp suite with Extension Copy As Python Request
 - AWS CLI
@@ -106,3 +117,16 @@ else:
 ```
 
 Flag is MD5sum of one of these files
+
+---
+## Remediations
+1. **Enforce Authentication**: Strictly disable anonymous access for S3 buckets. Ensure that all requests require valid IAM credentials or signed URLs.
+2. **Implement Principle of Least Privilege (PoLP)**:
+   - Apply restrictive **S3 Bucket Policies** that explicitly deny `s3:ListBucket` and `s3:GetObject` permissions to the `*` principal.
+   - Use **IAM Roles** with scoped permissions for services that need legitimate access to the data.
+3. **Network Perimeter Security**: 
+   - Deploy **VPC Endpoint Policies** to restrict S3 access to only traffic originating from within your approved VPC.
+   - Use **Security Groups** and **Network ACLs** to prevent unauthorized traffic from reaching S3 endpoints.
+4. **Continuous Monitoring**:
+   - Enable **AWS CloudTrail** data events to log all `GetObject` and `ListObjects` actions. Set up alerts for high volumes of API calls from single IP addresses, which is indicative of automated scraping tools.
+   - Implement **AWS Config** rules to automatically detect and remediate buckets that are marked as public.

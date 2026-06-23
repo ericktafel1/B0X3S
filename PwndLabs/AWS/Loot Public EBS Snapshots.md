@@ -1,5 +1,25 @@
 https://pwnedlabs.io/labs/loot-public-ebs-snapshots
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **Information Disclosure** and **Unauthorized Data Access** via the exposure of public Elastic Block Store (EBS) snapshots.
+
+1. **Public Snapshot Exposure**: EBS snapshots were explicitly marked as public 
+   (`createVolumePermission` set to `All`), allowing any AWS user to create 
+   volumes from these snapshots.
+2. **Excessive Permissions**: The `intern` user possessed broad `ec2:DescribeSnapshots` 
+   permissions, which allowed for the discovery and enumeration of snapshots 
+   owned by the target account.
+3. **Data Exfiltration**: By creating a volume from a public snapshot in an 
+   attacker-controlled account, the attacker could mount the file system to 
+   an EC2 instance.
+4. **Impact**: Accessing the raw volume data allowed the attacker to bypass 
+   instance-level security, potentially revealing sensitive stored credentials 
+   (e.g., `~/.aws/credentials`) and internal data, leading to a complete 
+   system compromise.
+
+---
+## Walkthrough
 Use the provided creds to enumerate the IAM user, ARN, and the user's policies:
 
 ```bash
@@ -43,3 +63,23 @@ aws ec2 describe-snapshots --owner-id self --restorable-by-user-ids all --no-pag
 EXFILTRATE: create a volume of EBS public snapshot: `AWS Console > select region us-east-1 > EC2 Service > Snapshots > Public snapshots > Snapshot ID = snap-0123456789 > Actions > Create volume from snapshot`
 
 Then, SSH into the EC2 instance and mount the volume. Enumerate for more AWS creds and the flag.
+
+---
+## Remediations
+1. **Restrict Snapshot Visibility**:
+   - Immediately audit all EBS snapshots and set their permissions to `Private`. 
+     Use the `ModifySnapshotAttribute` API to remove `All` from the 
+     `createVolumePermission` attribute.
+2. **IAM Least Privilege**:
+   - Restrict `ec2:DescribeSnapshots` and related permissions to specific 
+     authorized users. Ensure that developers or interns do not have broad 
+     read access to snapshot metadata.
+3. **Data Protection & Encryption**:
+   - Always encrypt EBS snapshots using `AWS KMS` customer-managed keys. Even if 
+     an encrypted snapshot is accidentally made public, it cannot be mounted 
+     without authorized access to the associated KMS key.
+4. **Monitoring & Governance**:
+   - Implement **AWS Config** rules to automatically detect and notify 
+     administrators when an EBS snapshot is modified to be public.
+   - Use `GuardDuty` to monitor for unusual volume creation activity that may 
+     indicate an attacker attempting to access data from snapshots.

@@ -1,5 +1,24 @@
 https://pwnedlabs.io/labs/abuse-cognito-user-and-identity-pools
 
+---
+## Vulnerability Summary
+The environment is vulnerable to a multi-stage exploit chain originating from 
+improperly secured Amazon Cognito configurations and a Server-Side Request 
+Forgery (SSRF) vulnerability within an AWS Lambda function.
+
+1. **Credential Acquisition**: Hardcoded Cognito Identity Pool IDs allow 
+   unauthenticated access to temporary IAM credentials.
+2. **Privilege Escalation**: Manipulation of Cognito User Pool flows allows 
+   authentication as a user, enabling access to more permissive IAM roles.
+3. **SSRF & File Read**: The downstream Lambda function fails to sanitize the 
+   target input parameter, allowing an attacker to use `file://` protocols to 
+   read the Lambda execution environment's environment variables.
+4. **Impact**: Exfiltration of valid IAM credentials from the Lambda environment 
+   leads to unauthorized access to sensitive S3 buckets and corporate 
+   confidential data (e.g., Disaster Recovery plans).
+
+---
+## Walkthrough
 Source code leaks a Cognito Identity Pool ID with a reference to an S3 bucket named `hl-app-images`. We can try to request a unique Identity ID by providing the Identity Pool ID from the source code:
 
 ```bash
@@ -206,3 +225,23 @@ aws s3 cp "s3://hl-status-log-bucket/IT-Temp/Huge Logistics Company_ AWS Disaste
 ```
 
 It includes the critical break glass account that allows access to a hot spare AWS account. PWNED!
+
+---
+## Remediations
+1. **Secure Cognito Infrastructure**:
+   - Implement the Principle of Least Privilege (PoLP) for Cognito Identity Pool 
+     roles; avoid attaching broad managed policies.
+   - Remove hardcoded Pool IDs and Client Secrets from client-side source code.
+
+2. **Harden AWS Lambda**:
+   - **Input Validation**: Implement strict allow-lists for all user-supplied inputs.
+   - **Protocol Restriction**: Explicitly block the `file://` protocol and restrict 
+     the function to authorized network destinations only.
+   - **Network Isolation**: Deploy functions within a VPC and use Security Groups 
+     to restrict egress traffic.
+
+3. **Data & Secret Protection**:
+   - Sensitive documents must not reside in buckets accessible by standard 
+     application service roles.
+   - Rotate credentials frequently and monitor for unusual `sts:GetCallerIdentity` 
+     or `lambda:Invoke` activity.

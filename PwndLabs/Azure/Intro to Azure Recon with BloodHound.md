@@ -1,4 +1,16 @@
 https://pwnedlabs.io/labs/intro-to-azure-recon-with-bloodhound
+
+---
+## Vulnerability Summary
+This lab demonstrates a complete **Identity-to-Infrastructure attack path** within a Microsoft Entra ID (Azure AD) environment, utilizing graph-based analysis to uncover privilege escalation vectors.
+
+1. **Reconnaissance with AzureHound**: By spoofing the legitimate Azure PowerShell client ID, an attacker can obtain tokens for the Microsoft Graph API. This allows the use of `AzureHound` to map the entire tenant structure, including users, groups, roles, and administrative relationships.
+2. **Graph-Based Analysis**: `BloodHound` visualizes the complex web of Entra ID permissions. In this scenario, the attacker identifies that the compromised user holds multiple directory roles, specifically those related to **Custom Security Attributes**.
+3. **Information Disclosure**: Leveraging `Attribute Assignment Reader` permissions, the attacker iterates through all tenant users to exfiltrate custom attributes, which often contain sensitive metadata or configuration markers.
+4. **Lateral Movement & Credential Harvesting**: The attack path leads to the `SECURITY-PC` VM. The attacker discovers an Azure role assignment that provides access to the VM's `UserData`. This metadata contains embedded credentials and instructions for accessing a storage account (`securityconfigs`), ultimately leading to the recovery of **Global Administrator** credentials.
+
+---
+## Walkthrough
 ### **Install Docker and Docker Compose**
 1. **Update your system**:
 ```bash
@@ -92,7 +104,7 @@ Using the Refresh Token in the newly saved `$Tokens.refresh_token` variable, the
 ./azurehound -r $Tokens.refresh_token list --tenant "XXXXXX-XXXX-XXX-XXXX-XXXXXXXXXXX" -o output.json
 ```
 
-Ingest `output.json` into BloodHound. Search for `Jose` add him to owned. Enumerate his permissions and the full list of Azure edges is available in the official BloodHound [documentation](https://bloodhound.specterops.io/resources/edges/overview) .
+"Ingest `output.json` into BloodHound. Search for `Jose` add him to owned. Enumerate his permissions and the full list of Azure edges is available in the official BloodHound [documentation](https://bloodhound.specterops.io/resources/edges/overview) .
 
 We see that our user is a member of five Azure AD (Entra ID) admin roles. After clicking this field the graph updates, showing a directly assigned role named `UPDATE MANAGER` four roles inherited from the `IT-Helpdesk` group.
 - **UPDATE MANAGER**: This is a custom directory role. On clicking the role we see the description "Allows helpdesk staff to update the manager role when users change teams". This doesn't seem too interesting from a security perspective.
@@ -101,7 +113,7 @@ We see that our user is a member of five Azure AD (Entra ID) admin roles. After 
 - **ATTRIBUTE DEFINITION READER**: This is a new directory role that allows members to read the definition of custom security attributes.
 - **ATTRIBUTE ASSIGNMENT READER**: This is a new directory role that allows members to read custom security attribute keys and values for supported Microsoft Entra objects. (INTERESTING)
 
-Looking at the official Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/users/users-custom-security-attributes?tabs=ms-powershell#get-the-custom-security-attribute-assignments-for-a-user) for custom security attributes we see how to query them, and can create a snippet to loop through all Azure users instead of manually going through each one in the console.
+Looking at the official Microsoft [documentation](https://learn.microsoft.com/en-us/entra/identity/users/users-custom-security-attributes?tabs=ms-powershell#get-the-custom-security-attribute-assignments-for-a-user) for custom security attributes we see how to query them, and can create a snippet to loop through all Azure users instead of manually going through each one in the console."
 
 First, open a PowerShell terminal and install the Microsoft Graph module with the command `Install-Module Microsoft.Graph` :
 
@@ -161,3 +173,21 @@ az storage blob download --account-name securityconfigs --container-name securit
 This reveals the `config-latest.xml` which contains numerous sensitive credentials including the Global Administrator account.
 
 We can also access this file using the console. Log into Azure as `security-user@megabigtech.com` and search for `storage accounts` . Click on `securityconfigs` , `Data Storage`, and then click on `Containers` . Click `security-pc` and then access the file. The container also contains the flag for this lab.
+
+---
+## Remediations
+1. **Restrict Sensitive Roles**:
+   - Audit the assignment of directory roles. Roles like `Attribute Assignment Reader` or `Global Reader` are highly sensitive and should be assigned strictly based on the principle of least privilege.
+   - Regularly review and clean up unused custom directory roles.
+
+2. **Secure Instance Metadata & User Data**:
+   - **Do not store secrets, passwords, or connection strings in VM User Data**, environment variables, or configuration scripts. 
+   - Use `Azure Key Vault` for secret management, and grant the VM a `Managed Identity` to access the vault securely without requiring hardcoded credentials.
+
+3. **Limit Graph API Exposure**:
+   - Monitor for anomalous service principal logins, particularly those utilizing public client IDs (like the Azure PowerShell client ID used for `AzureHound`).
+   - Implement **Conditional Access Policies** to require MFA for all access to the Microsoft Graph API.
+
+4. **Continuous Monitoring**:
+   - Enable **Microsoft Entra ID Protection** to detect risky sign-ins and identity-based threats.
+   - Use **Microsoft Defender for Cloud** to identify misconfigurations in storage accounts and VMs that could lead to credential exposure.

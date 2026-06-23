@@ -1,5 +1,16 @@
 https://pwnedlabs.io/labs/s3-bucket-brute-force-to-breach
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **Information Disclosure** and **Privilege Escalation** due to insecure bucket naming, public accessibility, and the storage of sensitive secrets in `AWS Systems Manager (SSM)`.
+
+1. **Bucket Enumeration**: The use of predictable bucket naming conventions allowed for the discovery of additional private-facing buckets via brute-force tools like `ffuf`.
+2. **Credential Leakage**: A script retrieved from the `hlogistics-beta` bucket contained hardcoded AWS IAM credentials, which were leveraged to gain initial access as the `ecollins` user.
+3. **SSM Parameter Access**: The `ecollins` user possessed excessive `ssm:GetParameter` permissions, enabling the retrieval of high-privilege credentials for the `lharris` user stored within the SSM Parameter Store.
+4. **Impact**: By assuming the `lharris` role, an attacker accessed EC2 Launch Templates containing sensitive `UserData` scripts, leading to the recovery of environment flags and potential system-wide persistence.
+
+---
+## Walkthrough
 Exposed bucket `hlogistics-web`. Enumerate:
 
 ```bash
@@ -103,3 +114,21 @@ aws ec2 describe-launch-templates --profile lharris
 aws ec2 describe-launch-template-versions --launch-template-name SCHEDULER --query "LaunchTemplateVersions[0].LaunchTemplateData.UserData" --output text --profile lharris | base64 --decode
 	FLAG
 ```
+
+---
+## Remediations
+1. **Bucket Security & Privacy**:
+   - Implement **S3 Block Public Access** for all buckets. Avoid predictable bucket names, and treat bucket names as semi-sensitive information.
+   - Use `AWS IAM Access Analyzer` to ensure no buckets are inadvertently exposed to the public.
+
+2. **Secrets Governance**:
+   - Never commit credentials to S3 or include them in scripts.
+   - Utilize `AWS Secrets Manager` with strict `IAM` policies (e.g., `kms:Decrypt` and `secretsmanager:GetSecretValue`) to protect sensitive configuration data.
+
+3. **Least Privilege (IAM)**:
+   - Audit policies for `ecollins` and other users. Access to `SSM` parameters should be limited strictly to the parameters required for their specific role function.
+   - Employ `IAM Conditions` (e.g., `aws:PrincipalTag`) to restrict access to parameters based on specific tags or organizational metadata.
+
+4. **Launch Template Hardening**:
+   - Review `EC2 UserData` for hardcoded secrets or sensitive configurations.
+   - Treat `Launch Templates` as "Infrastructure as Code" (IaC) and store them in secure, version-controlled repositories rather than allowing broad `describe` and `modify` permissions.

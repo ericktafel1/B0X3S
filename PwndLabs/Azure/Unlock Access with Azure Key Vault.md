@@ -1,5 +1,16 @@
 https://pwnedlabs.io/labs/unlock-access-with-azure-key-vault
 
+---
+## Vulnerability Summary
+This lab highlights how an attacker can escalate privileges by chaining **identity-based reconnaissance** with the **misuse of centralized secret management services**.
+
+1. **Reconnaissance & Enumeration**: Starting with compromised low-privilege credentials, the attacker uses the `Directory Readers` role to map the Entra ID (Azure AD) environment. This reveals an `Azure Key Vault` (`ext-contractors`) containing sensitive secrets.
+2. **Secret Harvesting**: Because the `ext-contractors` vault lacked sufficient access restrictions, the attacker was able to retrieve the stored secrets (passwords for other users) by directly querying the vault via the Azure CLI.
+3. **Privilege Escalation**: By assuming the identity of a higher-privileged user (`Josh`), the attacker accessed a custom `Azure Role`—"Customer Database Access." This role allowed for the enumeration and exfiltration of structured data from `Azure Storage Tables`.
+4. **Impact**: The compromise demonstrates a "ladder" attack: moving from an external contractor account, through secrets stored in a Key Vault, to high-value customer data held in NoSQL storage.
+
+---
+## Walkthrough
 With the creds from `PwndLabs/Azure/Azure Blob Container to Initial Access` lab, update `$profile` to enable Azure CLI auto completion:
 
 ```bash
@@ -213,3 +224,20 @@ Query the storage table:
 az storage entity query --table-name customers --account-name custdatabase --output table --auth-mode login
 	FLAG
 ```
+
+---
+## Remediations
+1. **Secure Key Vault Access**:
+   - Implement **Key Vault Access Policies** or **Azure RBAC** to enforce the principle of least privilege. Only specific service principals or users should have `Get` or `List` permissions on individual secrets.
+   - Use **Key Vault Managed Identity** to ensure only authorized applications (not arbitrary users) can access the secrets needed for operations.
+
+2. **Audit Directory Roles**:
+   - The `Directory Readers` role provides broad visibility into the tenant. Ensure this is only assigned to users who absolutely require it for their job function.
+   - Regularly audit role assignments to identify and remove stale or unnecessary permissions.
+
+3. **Data Protection & IAM**:
+   - Use **Entra ID (Azure AD) RBAC** for Azure Storage, rather than legacy Account Keys, to ensure fine-grained control over tables and blobs.
+   - Monitor `Azure Activity Logs` and `CloudTrail` for suspicious `keyvault:SecretGet` operations, especially when they originate from unexpected user-agents or IP addresses.
+
+4. **Identity & Access Management (IAM)**:
+   - Use **Privileged Identity Management (PIM)** to enforce just-in-time (JIT) access for sensitive roles, ensuring that elevated permissions are only granted for a limited duration after an approval process.

@@ -1,5 +1,16 @@
 https://pwnedlabs.io/labs/loot-exchange-teams-sharepoint-with-graphrunner
 
+---
+## Vulnerability Summary
+This lab illustrates how misconfigured Microsoft 365 permissions and the abuse of the **Microsoft Graph API** can lead to massive data exfiltration across an entire organizational ecosystem.
+
+1. **Authentication Abuse**: Attackers leverage legitimate OAuth 2.0 device code flows to authenticate as valid users. By assessing the environment with `MFASweep`, they identify that while some portals might be MFA-protected, the Microsoft Graph API often lacks this enforcement, providing an easy entry point.
+2. **Exploiting Microsoft Graph**: The `GraphRunner` toolset is utilized to programmatically search across `SharePoint`, `OneDrive`, and `Teams`. Because these services are interconnected through the Graph API, a single authenticated session allows an attacker to search thousands of documents simultaneously.
+3. **Lateral Movement to Cloud Data**: Sensitive information (credentials, connection strings) found in harvested documents provides the attacker with direct access to non-M365 infrastructure, specifically **Azure SQL Databases**.
+4. **Impact**: The combination of broad search capabilities and API access allows an attacker to pivot from a standard user account to critical corporate financial data, effectively bypassing perimeter defenses that focus only on traditional login portals.
+
+---
+## Walkthrough
 Login with provided creds:
 
 ```bash
@@ -248,3 +259,20 @@ After saving your changes, re-import the modified GraphRunner module into your P
 ```PowerShell
 Import-Module .\GraphRunner.ps1 -Force
 ```
+
+---
+## Remediations
+1. **Enforce Conditional Access (CA)**:
+   - Apply Conditional Access policies to all cloud apps, specifically targeting the **Microsoft Graph API**. MFA should be mandatory for all interactions, preventing attackers from abusing captured tokens or performing post-exploitation via scripts.
+
+2. **API Rate Limiting & Monitoring**:
+   - Monitor `Azure AD Sign-in logs` for unusual API access patterns, such as bulk data retrieval or requests from unauthorized IP ranges. 
+   - While Graph API throttling helps protect system stability, organizations should treat "429 Too Many Requests" patterns in their logs as a potential indicator of data scraping.
+
+3. **Data Classification & DLP**:
+   - Use **Microsoft Purview** for Data Loss Prevention (DLP). Label sensitive files (e.g., "Confidential") so that even if an attacker gains access to a user account, they cannot download or exfiltrate sensitive files without triggering alerts or blocking policies.
+   - Regularly audit and clean up SharePoint/OneDrive/Teams workspaces to remove outdated documents containing passwords or configuration secrets.
+
+4. **Database Hardening**:
+   - Never store database credentials in documents or mailboxes.
+   - Use `Azure Active Directory authentication` for Azure SQL databases rather than SQL Server authentication (username/password), eliminating the risk of plaintext credential leakage.

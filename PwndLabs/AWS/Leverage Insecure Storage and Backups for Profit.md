@@ -1,5 +1,25 @@
 https://pwnedlabs.io/labs/leverage-insecure-storage-and-backups-for-profit
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **Privilege Escalation** and **Data Exfiltration** resulting from the exposure of infrastructure backups and weak IAM access 
+control configurations.
+
+1. **Information Disclosure**: The IAM user possessed permissions to list S3 bucket 
+   policies, which revealed sensitive paths containing `ssh_keys_backup.zip`.
+2. **Backdoor Access**: Retrieval of these keys, combined with `ec2:GetPasswordData` 
+   permissions, allowed the attacker to decrypt the Windows Administrator password for 
+   a target EC2 instance.
+3. **Lateral Movement**: Upon accessing the instance, the attacker bypassed `Just Enough 
+   Administration` (JEA) restrictions by establishing a full `PowerShell Remoting` 
+   session, demonstrating a common path for post-exploitation escalation.
+4. **Credential Harvesting**: The attacker discovered static AWS credentials stored 
+   in the instance's local filesystem (`C:\Users\admin\.aws\credentials`). These 
+   highly-privileged credentials provided administrative access to the entire 
+   AWS account, leading to full compromise of sensitive data.
+
+---
+## Walkthrough
 ```bash
 aws configure --profile stor
 aws sts get-caller-identity --profile stor
@@ -136,3 +156,28 @@ aws-enumerator dump -services dynamodb
 aws-enumerator dump -services ec2
 	DescribeEndpoints
 ```
+
+---
+## Remediations
+1. **Secure Secret Management**:
+   - Never store SSH keys, private certificates, or password-protected backups 
+     in S3 buckets, regardless of access control settings.
+   - Use `AWS Secrets Manager` to handle instance-related credentials and secrets.
+
+2. **IAM Least Privilege**:
+   - Restrict `ec2:GetPasswordData` to specific, non-production instances.
+   - Audit IAM policies to ensure users do not have permissions to retrieve 
+     bucket policies or ACLs for sensitive storage buckets.
+
+3. **Instance Hardening**:
+   - Prevent the storage of AWS credentials on EC2 instances. Use **IAM Instance 
+     Profiles** to provide temporary, scoped permissions to applications instead of 
+     static keys.
+   - Enforce rigorous endpoint security. Ensure that `WinRM` and `PowerShell Remoting` 
+     are restricted to secure, authorized administrative jump boxes.
+
+4. **Monitoring & Governance**:
+   - Implement **GuardDuty** to detect unusual API calls or anomalous login 
+     attempts from instance-based credentials.
+   - Use `AWS Systems Manager` to manage administrative tasks on EC2 instead of 
+     opening ports for WinRM.

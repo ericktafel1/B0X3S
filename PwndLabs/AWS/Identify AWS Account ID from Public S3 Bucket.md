@@ -1,5 +1,27 @@
 https://pwnedlabs.io/labs/identify-the-aws-account-id-from-a-public-s3-bucket
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **AWS Account ID enumeration** through a 
+misconfigured, publicly accessible S3 bucket.
+
+1. **Reconnaissance**: Public S3 buckets (often found via web inspection or 
+   open-source intelligence) can be queried using automated tools to determine 
+   the owner's AWS Account ID.
+2. **Policy Exploitation**: The vulnerability leverages the `s3:ResourceAccount` 
+   policy condition key. By attempting to access a bucket with a policy that 
+   checks for a specific AWS Account ID, an attacker can iterate (brute-force) 
+   through potential IDs using wildcards until a successful match is identified.
+3. **Information Correlation**: Once the 12-digit AWS Account ID is discovered, 
+   an attacker can use it to perform further reconnaissance, such as searching 
+   for publicly exposed EBS snapshots, RDS snapshots, or AMIs belonging to 
+   that specific account.
+4. **Impact**: While an Account ID itself is not a secret, discovering it 
+   enables targeted attacks, including the identification of publicly leaked 
+   cloud resources and potential social engineering targeting.
+
+---
+## Walkthrough
 1. Run an `nmap` scan
 2. Inspect the webpage to find the bucket:
 	1. `https://mega-big-tech.s3.amazonaws.com/images/...`
@@ -48,3 +70,22 @@ To list public snapshots, supply owner ID and region:
 ```bash
 aws ec2 describe-snapshots --owner-ids 107513503799 --region us-east-1
 ```
+
+---
+## Remediations
+1. **S3 Public Access Block**:
+   - Enable **S3 Block Public Access** at both the bucket and account levels. 
+     This is the most effective control to prevent unauthorized enumeration 
+     and data exposure.
+2. **Restrict Public Access**:
+   - Audit bucket policies and ACLs to ensure they do not grant `s3:GetObject` 
+     or `s3:ListBucket` permissions to `AllUsers` or `AuthenticatedUsers`.
+3. **Minimize Public Exposure**:
+   - Regularly scan your AWS environment for public EBS snapshots, RDS snapshots, 
+     and AMIs. Ensure that no sensitive resources are unintentionally marked 
+     as "public."
+4. **Monitor Activity**:
+   - Use `AWS CloudTrail` to monitor for unusual API activity. Although 
+     account enumeration often happens from the attacker's own AWS account, 
+     monitoring for cross-account access patterns can help identify 
+     suspicious behavior.

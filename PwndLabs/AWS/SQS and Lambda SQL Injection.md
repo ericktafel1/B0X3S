@@ -1,5 +1,25 @@
 https://pwnedlabs.io/labs/sqs-and-lambda-sql-injection
 
+---
+## Vulnerability Summary
+The environment is vulnerable to **Second-Order SQL Injection**, where untrusted user input is 
+stored in an intermediate system (SQS) and later processed by a backend function (Lambda) 
+that executes vulnerable database queries.
+
+1. **Parameter Discovery**: Through automated fuzzing, the application was found to 
+   accept a `DESC` parameter, which expected a `trackingID` to retrieve shipment data.
+2. **Intermediate Storage Exposure**: The `SQS` queue (`huge-analytics`) allowed 
+   unauthenticated enumeration, revealing existing `trackingID` values and the structure 
+   expected by the backend.
+3. **Second-Order Injection**: By injecting malicious SQL syntax (e.g., `'` or `UNION SELECT`) 
+   into the `Client` message attribute, the attacker successfully manipulated the 
+   database query executed by the Lambda function.
+4. **Database Exfiltration**: Because the application failed to parameterize its SQL 
+   queries, the injection allowed for full database schema enumeration and the 
+   extraction of sensitive PII (addresses and credit card data) from the `customerData` table.
+
+---
+## Walkthrough
 Use the provided AWS creds to configure and enumerate:
 
 ```bash
@@ -188,3 +208,23 @@ clientName
 ./lambda_sqli.sh "UNION SELECT null, null, null, CONCAT(clientName,':',address,':',cardUsed) FROM customerData-- -"
 	FLAG HERE
 ```
+
+---
+## Remediations
+1. **Parameterized Queries**:
+   - The primary defense against SQL injection is the use of **Prepared Statements** (parameterized queries). Never concatenate user-provided inputs directly into 
+     SQL command strings.
+2. **Strict Input Validation**:
+   - Sanitize and validate all data retrieved from `SQS` messages before using it 
+     in database operations. Implement strict allow-lists for input formats (e.g., 
+     ensuring `trackingID` follows a specific alphanumeric pattern).
+3. **Least Privilege for Lambda**:
+   - The IAM role assigned to the Lambda function should follow the **Principle of Least 
+     Privilege (PoLP)**. If the function only requires access to specific tables, 
+     use database-level grants to limit its permissions rather than granting 
+     broad access to the entire schema.
+4. **Monitoring & Detection**:
+   - Monitor database error logs for frequent syntax errors, which are often 
+     precursors to automated SQL injection attacks.
+   - Use `AWS WAF` (if applicable) or application-level logging to detect and block 
+     common SQL injection patterns (`UNION`, `SELECT`, `--`, `INFORMATION_SCHEMA`).
