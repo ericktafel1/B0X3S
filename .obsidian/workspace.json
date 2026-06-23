@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PwndLabs/AWS/Uncover Secrets in CodeCommit and Docker.md",
+                "file": "PwndLabs/AWS/Abuse Cognito User and Identity Pools.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Uncover Secrets in CodeCommit and Docker"
+              "title": "Abuse Cognito User and Identity Pools"
             }
           }
         ]
@@ -202,9 +202,9 @@
     "PwndLabs/AWS/Hunt for Secrets in Git Repos.md",
     "PwndLabs/AWS/Exploit Weak Bucket Policies for Privileged Access.md",
     "PwndLabs/AWS/Execute and Identify Credential Abuse in AWS.md",
-    "PwndLabs/AWS/Assume Privileged Role with External ID.md",
     "PwndLabs/AWS/Create Custom Tooling to Explore AWS.md",
     "PwndLabs/AWS/AWS S3 Enumeration Basics.md",
+    "PwndLabs/AWS/Assume Privileged Role with External ID.md",
     "PwndLabs/AWS/Access Secrets with S3 Bucket Versioning.md",
     "PwndLabs/AWS/Abuse Cognito User and Identity Pools.md",
     "PwndLabs/AWS/wormius.py",

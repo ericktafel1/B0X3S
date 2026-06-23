@@ -1,4 +1,7 @@
-https://pwnedlabs.io/labs/sqs-and-lambda-sql-injection
+## Disclosure
+This documentation is intended for educational purposes only. All activities were performed within a controlled, authorized environment provided by [PwnedLabs](https://pwnedlabs.io/). This write-up focuses strictly on the methodology, vulnerability analysis, and security remediation techniques. All sensitive identifiers, including credentials, tokens, and specific PII, have been redacted or generalized to comply with security best practices and the platform's Terms of Service. The intent of this content is to foster professional development and contribute to the cybersecurity community's knowledge base.
+
+**The lab:** https://pwnedlabs.io/labs/sqs-and-lambda-sql-injection
 
 ---
 ## Vulnerability Summary
