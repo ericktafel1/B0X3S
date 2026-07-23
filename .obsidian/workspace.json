@@ -11,10 +11,14 @@
             "id": "d8da7542b74fdb69",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "HackSmarter/Dark - HS.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Dark - HS"
             }
           }
         ]
@@ -181,6 +185,11 @@
   },
   "active": "d8da7542b74fdb69",
   "lastOpenFiles": [
+    "HackSmarter/A Template - CTF.md",
+    "HackSmarter/Dark - HS.md",
+    "HackSmarter/Samurai - HS.md",
+    "HTB/A Template - CTF.md",
+    "HackSmarter",
     "PwndLabs/GXPN_CPE_Submission_ErickTafel.pdf",
     "PwndLabs/OSCP_CPE_Submission_ErickTafel.pdf",
     "PwndLabs/cpes_gen.sh",
@@ -193,8 +202,6 @@
     "PwndLabs/generate_cpes4.sh",
     "PwndLabs/Cloud Security Engineer Roadmap by Pwned Labs.pdf",
     "PwndLabs/generate_cpes3.sh",
-    "PwndLabs/generate_cpes2.sh",
-    "PwndLabs/generate_cpes.sh",
     "PwndLabs/combined_labs_clean.md",
     "PwndLabs/combined_labs.md",
     "PwndLabs/OSCP_CPE_Submission.md",
@@ -215,9 +222,6 @@
     "PwndLabs/AWS/Path Traversal to AWS credentials to S3.md",
     "PwndLabs/AWS/Loot Public EBS Snapshots.md",
     "PwndLabs/AWS/Leverage Leaked Credentials for Pwnage.md",
-    "PwndLabs/AWS/Leverage Insecure Storage and Backups for Profit.md",
-    "PwndLabs/AWS/Identify AWS Account ID from Public S3 Bucket.md",
-    "PwndLabs/AWS/Hunt for Secrets in Git Repos.md",
     "PwndLabs/AWS/images/Pasted image 20260604133322.png",
     "PwndLabs/AWS/images/Pasted image 20260604105411.png",
     "PwndLabs/AWS/images/Pasted image 20260603145519.png",
