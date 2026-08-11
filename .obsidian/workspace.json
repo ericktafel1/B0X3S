@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HTB/Instant - HTB.md",
+                "file": "HTB/Catch - HTB.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Instant - HTB"
+              "title": "Catch - HTB"
             }
           }
         ]
@@ -41,9 +41,7 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false,
-                "showSearch": false,
-                "searchQuery": ""
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -185,9 +183,10 @@
       "bases:Create new base": false
     }
   },
-  "active": "6e396185a9d7fc73",
+  "active": "d8da7542b74fdb69",
   "lastOpenFiles": [
     "HTB/A Template - CTF.md",
+    "HTB/Catch - HTB.md",
     "HTB/Instant - HTB.md",
     "HackSmarter/Dark - HS.md",
     "HackSmarter/A Template - CTF.md",
@@ -223,7 +222,6 @@
     "PwndLabs/AWS/SQS and Lambda SQL Injection.md",
     "PwndLabs/AWS/S3 Bucket Brute Force to Breach.md",
     "PwndLabs/AWS/Path Traversal to AWS credentials to S3.md",
-    "PwndLabs/AWS/Loot Public EBS Snapshots.md",
     "PwndLabs/AWS/images/Pasted image 20260604133322.png",
     "PwndLabs/AWS/images/Pasted image 20260604105411.png",
     "PwndLabs/AWS/images/Pasted image 20260603145519.png",
